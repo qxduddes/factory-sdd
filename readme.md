@@ -3,17 +3,17 @@
 ### Factory 2.0
 Date: Feb 14, 2022
 
-#### Introduction
-**Purpose**
+> #### 1. Introduction
+**1.1 Purpose**<br>
 This software design document describes the structure of the software and how it will be built and executed. The file provides technical details and a description of all methods and technologies.  
 
-**Scope**
+**1.2 Scope**<br>
 The software design document’s scope sets the requirements for the software, helping the team and the stakeholders summarize the characteristics of the desired product. Here, parties state which features are essential to achieve business objectives and user experience goals. In particular, the document is focused on describing the essential functionality and critical architectural components. 
 
-**Audience**
+**1.3 Audience**<br>
 This document will be created and used by the development team, project manager, and the client. The process of making changes to the software design document should be discussed with all participants. All stakeholders are free to refer to SDD at any stage of the project. 
 
-#### System Overview
+> #### 2. System Overview
 
 ```mermaid
     flowchart TB;
@@ -25,13 +25,13 @@ This document will be created and used by the development team, project manager,
    F[Factory]-- store -->G[(Factory DB)];
 ```
 
-#### Design Considerations
-**Automation**
-**Backward Compatibility**
-**Mobile Optimized**
-**Performance**
-#### System Architecture and Architecture Design
-- System Architecture Diagram
+> #### 3. Design Considerations
+- **3.1 Automated**<br>
+- **3.2 Resiliency**<br>
+- **3.3 Mobile Optimized**<br>
+- **3.4 Performance**<br>
+> #### 4. System Architecture and Architecture Design
+- 4.1 System Architecture Diagram
 
 ```mermaid
     flowchart LR;
@@ -59,7 +59,7 @@ This document will be created and used by the development team, project manager,
 
 ```
     
-- Software Architecture Diagram
+- 4.2 Software Architecture Diagram
 
 ``` mermaid
     graph LR;
@@ -78,17 +78,17 @@ This document will be created and used by the development team, project manager,
     h[fedex/ups service]--tracking-->c[factory api];
 
 ```
-- Sequence Diagram   
+- 4.3 Sequence Diagram   
 ``` mermaid
     sequenceDiagram
     autonumber
     User->>Login Page: Login;
     Note left of User: User Login Sequence;
     Login Page->>Validation: Login(User and Password);
-    Validation-->>Aws Cognito:Verify(User and Password);
-    Aws Cognito-->>Validation:User verified;
-    Validation-->>User Model: Check If User Exist;
-    User Model-->>Validation:User Found;
+    Validation-->>+Aws Cognito:Verify(User and Password);
+    Aws Cognito-->>-Validation:User verified;
+    Validation-->>+User Model: Check If User Exist;
+    User Model-->>-Validation:User Found;
     Validation-->>Login Page:Login Success;
     Aws Cognito-->>Validation:Unauthorized;
     User Model-->>Validation:User Not Found;
@@ -98,25 +98,51 @@ This document will be created and used by the development team, project manager,
 ```mermaid
     sequenceDiagram
     autonumber
-    User->>Factory Page:access page;
-    User->>Factory Setup Page:setup factory;
-    Factory Setup Page-->>Factory API:get master processes;
-    Factory API->>Factory Setup Page:show master processes;
-    Factory Setup Page-->>Factory API:create and store new factory process;
-    Factory API-->>Factory Page:display factory processes;
     Note left of User:Factory Page Access Sequence;
-    Factory Page->>Factory API:verify user access token;
-    Factory API-->>Factory Page:user token verified;
-    Factory API-->>Factory Page:display factory information;
+    User->>+Factory API:verify user access token;
+    Factory API-->>-User:access token verified;
+    User->>Factory Page:view page;
+    User->>Factory Setup Page:setup factory;
+    Factory Setup Page-->>+Factory API:get master processes;
+    Factory API->>-Factory Setup Page:show master processes;
+    Factory Setup Page-->>+Factory API:create and store new factory process;
+    Factory API-->>+Factory Page:display factory processes;
+    Factory API-->>-Factory Page:display factory information;
     User->>Factory Page:edit factory;
-    Factory Page->>Factory API:get factory information;
-    Factory API-->>Factory Page:show factory information;
+    Factory Page->>+Factory API:get factory information;
+    Factory API-->>-Factory Page:show factory information;
     User->>Factory Page:update factory information;
-    Factory Page->>Factory API:store factory information;
-    Factory API-->>Factory Page:save success;
-    Factory Page-->>User:show save success;
+    Factory Page->>+Factory API:store factory information;
+    Factory API-->>-Factory Page:save success;
+    Factory Page->>User:show save success;
 ```
-#### Design Specifications
-- Business Requirements
-- Database Design
-- User Interface Design
+---
+```mermaid
+    sequenceDiagram
+    autonumber
+    Note left of User:Factory Setup Sequence;
+    User->>+Factory API:verify user access token;
+    Factory API-->>-User:access token verified;
+    User->>Factory Setup:setup new factory;
+    Factory Setup->>+Factory API:get master processes;
+    Factory API-->>-Factory Setup: show master processes;
+    Factory Setup-->>+User:show setup steps;
+    User->>-Factory Setup:select process, create group process,;
+    Factory Setup-->>+Factory API:store new factory process;
+    Factory API-->>-Factory Setup: get all factory processes;
+    Factory Setup->>User:list all factory processes;
+```
+#### 5. Design Specifications
+- 5.1 **Business Requirements**
+    - Functional
+        1. Able to open the application from different browsers like Brave, Google Chrome, Microsoft Edge and Apple Safari.
+        2. The Application user interface should be tablet optimized.
+        3. Should be able to easily see the status of the orders like not started, on progress, completed, cancelled, rejected.
+        4. Should be able to generate unique QRCode for order.
+        5. Should be able to scan QRCode to retrieve order information and status.
+        6. Should be able to create process flow
+        7. Should be able to send email notification on the shipping status
+        8. Should be able to show order analytics in the dashboard.
+    - Non-functional
+- 5.2 **Database Design**
+- 5.3 **User Interface Design**
