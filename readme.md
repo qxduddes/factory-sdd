@@ -2,6 +2,7 @@
 
 ### Factory 2.0
 Date: Feb 14, 2022
+Author: Agustin Depasupil
 
 > #### 1. Introduction
 **1.1 Purpose**<br>
