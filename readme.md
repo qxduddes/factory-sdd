@@ -1,8 +1,8 @@
 ### Software Design Documentation
 
 ### Factory 2.0
-Date: Feb 14, 2022
-Author: Agustin Depasupil
+Date: Feb 14, 2022<br>
+Author: Agustin Depasupil<br>
 
 > #### 1. Introduction
 **1.1 Purpose**<br>
