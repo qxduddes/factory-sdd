@@ -130,8 +130,53 @@ This document will be created and used by the development team, project manager,
     Factory Setup-->>+User:show setup steps;
     User->>-Factory Setup:select process, create group process,;
     Factory Setup-->>+Factory API:store new factory process;
-    Factory API-->>-Factory Setup: get all factory processes;
+    Factory API-->>-Factory Setup:get all factory processes;
     Factory Setup->>User:list all factory processes;
+```
+---
+```mermaid
+    sequenceDiagram
+    autonumber
+    Note left of User:Worker Setup Sequence;
+    User->>+Factory API:verify user access token;
+    Factory API-->>-User:access token verified;
+    Factory API-->>+Worker Page:get all workers;
+    Worker Page->>-User:view worker list;
+    User->>Worker Page:add/update worker;
+    Worker Page-->>+Factory API:store worker information;
+    Factory API-->>-Worker Page:get all workers;
+    Worker Page->>User:list all workers;
+```
+---
+```mermaid
+    sequenceDiagram
+    autonumber;
+    Note left of User:Order Sequence;
+    User->>+Factory API:verify user access token;
+    Factory API-->>-User:access token verified;
+    User->>Order Page:view orders;
+    Order Page-->>+Factory API:get all orders;
+    Factory API-->>-Order Page:show all orders;
+    User->>Order Page:view order information;
+    Order Page->>Order Details Page:display order page
+    Factory API-->>Order Details Page:show order details;
+    Order Details Page-->>+Factory API:store/update order details;
+    Factory API->>-Order Page:return order page;
+    User->>Order Page:assign process;
+    Order Page-->>Factory API:generate and store production queue;
+    User->>Order Page:select order to view production;
+    Order Page-->>+Factory API:get the selected order production queues;
+    Factory API-->>-Order Page:retrieve order production queues;
+    Order Page->>Production Queue Page:display order production queues;
+    User->>Order Page:view production history;
+    Order Page-->>+Factory API:get selected order production history;
+    Factory API-->>-Order Page:retrieve selected order production history;
+    Order Page->>User:show selected order production history;
+    User->>Order Page:reject order;
+    Order Page->>Reject Page:display reject page;
+    User->>Reject Page:input reject reason;
+    Reject Page-->>+Factory API:store reject reason;
+    Factory API->>Order Page:return to order page;
 ```
 #### 5. Design Specifications
 - 5.1 **Business Requirements**
