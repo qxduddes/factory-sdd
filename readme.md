@@ -159,19 +159,20 @@ This document will be created and used by the development team, project manager,
     Factory API-->>-Order Page:show all orders;
     User->>Order Page:view order information;
     Order Page->>Order Details Page:display order page
-    Factory API-->>Order Details Page:show order details;
+    Factory API-->>Order Details Page:show order details to user;
     Order Details Page-->>+Factory API:store/update order details;
     Factory API->>-Order Page:return order page;
     User->>Order Page:assign process;
     Order Page-->>Factory API:generate and store production queue;
     User->>Order Page:select order to view production;
-    Order Page-->>+Factory API:get the selected order production queues;
-    Factory API-->>-Order Page:retrieve order production queues;
+    Production Queue Page-->>+Factory API:get the selected order production queues;
+    Factory API-->>-Production Queue Page:retrieve order production queues;
     Order Page->>Production Queue Page:display order production queues;
     User->>Order Page:view production history;
-    Order Page-->>+Factory API:get selected order production history;
-    Factory API-->>-Order Page:retrieve selected order production history;
-    Order Page->>User:show selected order production history;
+    Production History Page-->>+Factory API:get selected order production history;
+    Factory API-->>-Production History Page:retrieve selected order production history;
+    Order Page->>Production History Page:display production history page;
+    Production History Page->>User:show selected order production history to user;
     User->>Order Page:reject order;
     Order Page->>Reject Page:display reject page;
     User->>Reject Page:input reject reason;
