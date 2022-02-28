@@ -203,6 +203,13 @@ This document will be created and used by the development team, project manager,
     Factory API-->>-Production Queue Page:change order status to 'Completed';
     end
     end
+    rect rgb(253, 199, 209)
+    opt Order Reject
+    User->>Production Queue Page:order reject;
+    Production Queue Page-->>+Factory API:set order status to 'Rejected' and update order status;
+    Factory API-->>-Production Queue Page:change order status to 'Rejected';
+    end
+    end
 ```
 #### 5. Design Specifications
 - 5.1 **Business Requirements**
@@ -215,7 +222,8 @@ This document will be created and used by the development team, project manager,
         6. Should be able to create process flow
         7. Should be able to send email notification on the shipping status
         8. Should be able to show factory analytics in the dashboard.
-    - Non-functional
+
 - 5.2 **Database Design**
+---
 ![Factory Data Model](data-model.png)
 - 5.3 **User Interface Design**
