@@ -179,17 +179,43 @@ This document will be created and used by the development team, project manager,
     Reject Page-->>+Factory API:store reject reason;
     Factory API->>Order Page:return to order page;
 ```
+---
+```mermaid
+    sequenceDiagram
+    autonumber
+    Note left of User:Production Queue Sequence
+    User->>+Factory API:verify user access token;
+    Factory API-->>-User:access token verified;
+    User->>Production Queue Page:view production queue orders;
+    Production Queue Page-->>+Factory API:get all orders;
+    Factory API-->>-Production Queue Page:show all orders;
+    rect rgb(191, 223, 255)
+    opt Accept Order
+    User->>Production Queue Page:accept order;
+    Production Queue Page-->>+Factory API:set order status to 'Progress' and update order status;
+    Factory API-->>-Production Queue Page:change order status to 'Progress';
+    end
+    end
+    rect rgb(204, 255, 204)
+    opt Order Complete
+    User->>Production Queue Page:order complete;
+    Production Queue Page-->>+Factory API:set order status to 'Completed' and update order status;
+    Factory API-->>-Production Queue Page:change order status to 'Completed';
+    end
+    end
+```
 #### 5. Design Specifications
 - 5.1 **Business Requirements**
     - Functional
         1. Able to open the application from different browsers like Brave, Google Chrome, Microsoft Edge and Apple Safari.
         2. The Application user interface should be tablet optimized.
-        3. Should be able to easily see the status of the orders like not started, on progress, completed, cancelled, rejected.
-        4. Should be able to generate unique QRCode for order.
+        3. Should be able to easily see the status of the orders like "not started", "on progress", "completed", "cancelled", "rejected".
+        4. Should be able to generate and scan unique QRCode for new order queue.
         5. Should be able to scan QRCode to retrieve order information and status.
         6. Should be able to create process flow
         7. Should be able to send email notification on the shipping status
-        8. Should be able to show order analytics in the dashboard.
+        8. Should be able to show factory analytics in the dashboard.
     - Non-functional
 - 5.2 **Database Design**
+![Factory Data Model](data-model.png)
 - 5.3 **User Interface Design**
