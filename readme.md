@@ -34,6 +34,9 @@ This document will be created and used by the development team, project manager,
 > #### 4. System Architecture and Architecture Design
 - 4.1 System Architecture Diagram
 
+![PubSubArch](pubsub-architecture.png)
+
+####Order Flow
 ```mermaid
     flowchart LR;
     A[Customizer]-- new order -->B[Customizer API];
