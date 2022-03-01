@@ -36,7 +36,7 @@ This document will be created and used by the development team, project manager,
 
 ![PubSubArch](pubsub-architecture.png)
 
-####Order Flow
+#### Order Flow
 ```mermaid
     flowchart LR;
     A[Customizer]-- new order -->B[Customizer API];
